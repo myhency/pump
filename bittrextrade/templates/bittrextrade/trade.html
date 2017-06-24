@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script type="text/javascript" src="{% static 'js/gmtclock.js' %}"></script>
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+
+    <div>
+        <form method="POST">{% csrf_token %}{{ form.as_p }}
+            <input type="submit" name="buy" value="Buy" />
+            <input type="submit" name="sell" value="Sell" />
+        </form>
+    </div>
+    <div class="clock"></div>
+</body>
+</html>
