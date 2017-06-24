@@ -45,11 +45,9 @@ def index(request):
                           'form': form
                       })
 
-
-
 def buyCoin(coinName):
     coinName = 'BTC-'+coinName
-    askPrice = float('%.8f' % bittrex.get_ticker(coinName)['result']['Ask']) * 1.001
+    askPrice = float('%.8f' % bittrex.get_ticker(coinName)['result']['Ask']) * 1.2
     askPrice = '%.8f' % float(askPrice)
     qty = round(float(0.1 / float(askPrice)), 8)
     buyResult = bittrex.buy_limit(coinName, qty, askPrice)['result']
@@ -59,7 +57,7 @@ def buyCoin(coinName):
 
 def sellCoin(coinName):
     coinAvail = bittrex.get_balance(coinName)['result']['Available']
-    bidPrice = float('%.8f' % bittrex.get_ticker('BTC-'+coinName)['result']['Bid']) * 0.999
+    bidPrice = float('%.8f' % bittrex.get_ticker('BTC-'+coinName)['result']['Bid']) * 0.6
     bidPrice = '%.8f' % float(bidPrice)
     buyResult = bittrex.sell_limit('BTC-' + coinName, coinAvail, bidPrice)['result']
     myOrderHistory = bittrex.get_order_history(coinName, 1)
