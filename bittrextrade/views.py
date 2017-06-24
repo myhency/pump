@@ -23,6 +23,7 @@ def index(request):
             if 'buy' in request.POST:
                 trade = form.save(commit=False)
                 buyResult, myOrderHistory, openOrders = buyCoin(trade.coin)
+                # buyCoin(trade.coin)
                 return render(request, 'bittrextrade/index.html',
                               {
                                   'currentGMT': currentGMT,
@@ -50,7 +51,7 @@ def buyCoin(coinName):
     coinName = 'BTC-'+coinName
     askPrice = float('%.8f' % bittrex.get_ticker(coinName)['result']['Ask']) * 1.001
     askPrice = '%.8f' % float(askPrice)
-    qty = int(0.1 / float(askPrice))
+    qty = round(float(0.1 / float(askPrice)), 8)
     buyResult = bittrex.buy_limit(coinName, qty, askPrice)['result']
     myOrderHistory = bittrex.get_order_history(coinName, 1)
     openOrders = bittrex.get_open_orders(coinName)
